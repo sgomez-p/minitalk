@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:05:56 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/20 16:14:13 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:38:15 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void mt_kill(int pid, char *str)
 
 int	main(int argc, char **argv)
 {
-	if (argc != 3 || !ft_strlen(argv[2]))
+	if (argc != 3 || !ft_strlen(argv[2])) // comprobamos que solo 2 argumentos y que el segundo no esta vacio
 		return (1);
 	ft_putstr_fd("Enviado: ", 1);
 	ft_putnbr_fd(ft_strlen(argv[2]), 1);
@@ -69,8 +69,8 @@ int	main(int argc, char **argv)
 	ft_putstr_fd("Recibido: ", 1);
 	signal(SIGUSR1, action);
 	signal(SIGUSR2, action);
-	mt_kill(ft_atoi(argv[1]), argv[2]);
+	mt_kill(ft_atoi(argv[1]), argv[2]); // pilla el PID y segun si es 1 o 0 SIGUR1 o 2
 	while(1)
-		pause();
+		pause(); // se suspende la ejecucion del programa hasta q recibe otra señal
 	return (0);
 }
