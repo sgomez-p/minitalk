@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:05:56 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/20 17:38:15 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/21 12:44:50 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void mt_kill(int pid, char *str)
             usleep(100); // espera 100 microsegundos antes de enviar el siguiente bit
         }
     }
-    // Se envían 8 señales SIGUSR1 adicionales para indicar el final del mensaje.
+    // Se envían 8 señales SIGUSR1 adicionales para indicar el final del mensaje. pq?
     i = 8;
     while (i--)
     {
