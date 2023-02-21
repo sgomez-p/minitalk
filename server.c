@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:05:48 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/20 16:13:37 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:46:38 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(void)
 {
 	struct sigaction	s_sigaction;
 
-	ft_putstr_fd("Server PID: ", 1); // muestra el PID del servidor
+	ft_putstr_fd("PID del server: ", 1); // muestra el PID del servidor
 	ft_putnbr_fd(getpid(), 1);
 	ft_putchar_fd('\n', 1);
 	s_sigaction.sa_sigaction = action; // indica la función que se va a llamar cuando se reciba una señal
