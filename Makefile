@@ -6,7 +6,7 @@
 #    By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 14:27:09 by sgomez-p          #+#    #+#              #
-#    Updated: 2023/02/20 16:25:19 by sgomez-p         ###   ########.fr        #
+#    Updated: 2023/02/21 18:50:04 by sgomez-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ OPRINTF	=	${CPRINTF:.c=.o}
 
 CGNL		= \
 			libft/gnl/get_next_line.c libft/gnl/get_next_line_utils.c \
-			libft/gnl/get_next_line_bonus.c libft/gnl/get_next_line_utils_bonus.c
 OGNL	=	${CGNL:.c=.o}
 
 ###############################################################################
