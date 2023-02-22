@@ -6,7 +6,7 @@
 /*   By: sgomez-p <sgomez-p@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 13:05:48 by sgomez-p          #+#    #+#             */
-/*   Updated: 2023/02/21 18:57:18 by sgomez-p         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:17:35 by sgomez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,31 @@
 
 static void action(int sig, siginfo_t *info, void *context)
 {
-    static int i = 0; // contador para saber cuándo se han recibido 8 bits
-    static pid_t client_pid = 0; // PID del cliente que envía la señal
-    static unsigned char c = 0; // carácter que se va a recibir, bit por bit
-    static unsigned char mask = 0b10000000; // máscara para desplazar bits
+    static int i = 0;
+    static pid_t client_pid = 0;
+    static unsigned char c = 0;
+    static unsigned char mask = 0b10000000;
 
-    (void)context; // evita una advertencia por no utilizar el parámetro
+    (void)context;
     if (!client_pid)
-        client_pid = info->si_pid; // si es la primera señal que recibe, obtiene el PID del cliente
+        client_pid = info->si_pid;
     if (sig == SIGUSR2)
-        c |= mask; // se asigna el bit que se ha recibido en el carácter
-    mask >>= 1; // desplaza la máscara hacia la derecha para leer el siguiente bit
+        c |= mask;
+    mask >>= 1;
     if (++i == 8)
     {
         i = 0;
-        if (!c) // si el carácter es 0, es el fin del mensaje
+        if (!c)
         {
-            kill(client_pid, SIGUSR2); // envía una señal SIGUSR2 al cliente para indicar que se ha recibido el mensaje completo
-            client_pid = 0; // reinicia el PID del cliente
-            mask = 0b10000000; // reinicia la máscara
+            kill(client_pid, SIGUSR2);
+            client_pid = 0;
+            mask = 0b10000000;
             return ;
         }
-        ft_putchar_fd(c, 1); // muestra el carácter recibido
-        c = 0; // reinicia el carácter
-        mask = 0b10000000; // reinicia la máscara
-        kill(client_pid, SIGUSR1); // envía una señal SIGUSR1 al cliente para indicar que está listo para recibir el siguiente carácter
+        write(1, &c, 1);
+        c = 0;
+        mask = 0b10000000;
+        kill(client_pid, SIGUSR1);
     }
 }
 
@@ -51,15 +51,14 @@ int main(void)
 {
     struct sigaction s_sigaction;
 
-    ft_putstr_fd("PID del server: ", 1); // muestra el PID del servidor
+    write(1, "PID del server: ", 16);
     ft_putnbr_fd(getpid(), 1);
-    ft_putchar_fd('\n', 1);
-    s_sigaction.sa_sigaction = action; // indica la función que se va a llamar cuando se reciba una señal
-    s_sigaction.sa_flags = SA_SIGINFO; // indica que se quiere obtener información adicional sobre la señal
-    sigaction(SIGUSR1, &s_sigaction, 0); // establece la función de acción para la señal SIGUSR1
-    sigaction(SIGUSR2, &s_sigaction, 0); // establece la función de acción para la señal SIGUSR2
+    write(1, "\n", 1);
+    s_sigaction.sa_sigaction = action;
+    s_sigaction.sa_flags = SA_SIGINFO;
+    sigaction(SIGUSR1, &s_sigaction, 0);
+    sigaction(SIGUSR2, &s_sigaction, 0);
     while (1)
-        pause(); // espera a que se reciba una señal
+        pause();
     return (0);
 }
-
